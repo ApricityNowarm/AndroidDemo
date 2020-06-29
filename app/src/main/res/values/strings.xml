@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Demo</string>
+    <string name="notice_sign_up">还没有账号？注册</string>
+    <string name="login_in_button">Login In</string>
+    <string name="sign_up">Sign up</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="account_hint">请输入账号</string>
+    <string name="certain_password_hint">请再次输入密码</string>
+    <string name="todo">TODO</string>
+    <string name="shou_ye">首页</string>
+    <string name="tu_biao">图表</string>
+    <string name="li_cai">理财</string>
+    <string name="wo_de">我的</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

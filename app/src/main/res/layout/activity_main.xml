@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:stateListAnimator="@anim/fragment_open_enter"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/fragment_container_view_tag"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"/>
+
+    <RadioGroup
+        android:id="@+id/radio"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/shou_ye_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:button="@android:drawable/screen_background_light_transparent"
+            android:gravity="center"
+            android:drawableTop="@drawable/shouye_rb"
+            android:text="@string/shou_ye" />
+
+        <RadioButton
+            android:id="@+id/tu_biao_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:button="@android:drawable/screen_background_light_transparent"
+            android:gravity="center"
+            android:drawableTop="@drawable/graph_rb"
+            android:text="@string/tu_biao" />
+
+        <ImageButton
+            android:id="@+id/add_bt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:background="@android:drawable/screen_background_light_transparent"
+            android:src="@drawable/add_btn"
+            android:contentDescription="@string/todo" />
+        <RadioButton
+            android:id="@+id/li_cai_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:button="@android:drawable/screen_background_light_transparent"
+            android:gravity="center"
+            android:drawableTop="@drawable/licai_rb"
+            android:text="@string/li_cai" />
+
+        <RadioButton
+            android:id="@+id/me_rb"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="6"
+            android:button="@android:drawable/screen_background_light_transparent"
+            android:gravity="center"
+            android:drawableTop="@drawable/me_rb"
+            android:text="@string/wo_de" />
+    </RadioGroup>
+</LinearLayout>
