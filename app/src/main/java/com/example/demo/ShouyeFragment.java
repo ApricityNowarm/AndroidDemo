@@ -2,11 +2,20 @@ package com.example.demo;
 
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.demo.databinding.FragmentShouyeBinding;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +32,11 @@ public class ShouyeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private int USER_ID;
+    private RecyclerView recyclerView;
+    private MyAdapter myAdapter;
+    private MyViewModel myViewModel;
+    private FragmentShouyeBinding shouyeBinding;
     public ShouyeFragment() {
         // Required empty public constructor
     }
@@ -53,12 +66,33 @@ public class ShouyeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        USER_ID = getArguments().getInt("ID");
+        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        shouyeBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_shouye,container,false);
+        shouyeBinding.setSYdata(myViewModel);
+        shouyeBinding.setLifecycleOwner(this);
+        View view = shouyeBinding.getRoot();
+        init();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shouye, container, false);
+        return view;
+    }
+
+    private void init(){
+        recyclerView = shouyeBinding.recycleView;
+        myAdapter = new MyAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setAdapter(myAdapter);
+        myViewModel.getAllData(USER_ID).observe(getViewLifecycleOwner(), new Observer<List<UserData>>() {
+            @Override
+            public void onChanged(List<UserData> userData) {
+                myAdapter.setAllData(userData);
+                myAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }
