@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.demo.databinding.FragmentShouyeBinding;
 
@@ -37,6 +38,7 @@ public class ShouyeFragment extends Fragment {
     private MyAdapter myAdapter;
     private MyViewModel myViewModel;
     private FragmentShouyeBinding shouyeBinding;
+    private TextView income,expend;
     public ShouyeFragment() {
         // Required empty public constructor
     }
@@ -84,6 +86,8 @@ public class ShouyeFragment extends Fragment {
 
     private void init(){
         recyclerView = shouyeBinding.recycleView;
+        income = shouyeBinding.income;
+        expend = shouyeBinding.expend;
         myAdapter = new MyAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(myAdapter);
@@ -92,6 +96,16 @@ public class ShouyeFragment extends Fragment {
             public void onChanged(List<UserData> userData) {
                 myAdapter.setAllData(userData);
                 myAdapter.notifyDataSetChanged();
+                double incomeMoney = 0;
+                double expendMoney = 0;
+                for (UserData userDatum : userData) {
+                    if(userDatum.getSort().equals("工资"))
+                        incomeMoney += userDatum.getData();
+                    else
+                        expendMoney += userDatum.getData();
+                }
+                income.setText("收入：+" + String.valueOf(incomeMoney));
+                expend.setText("支出：-" + String.valueOf(expendMoney));
             }
         });
     }
