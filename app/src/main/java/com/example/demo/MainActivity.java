@@ -5,10 +5,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
     private int USER_ID;
@@ -43,7 +43,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             }
             fragmentTransaction1.commit();
             FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction2.show(addFragment);
+            if(addFragment != null)
+                fragmentTransaction2.show(addFragment);
+            Bundle bundle = new Bundle();
+            bundle.putInt("ID",USER_ID);
+            addFragment.setArguments(bundle);
             fragmentTransaction2.addToBackStack(null);
             fragmentTransaction2.commit();
         });
@@ -51,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     }
     private void defaultFragment(){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        Log.v("myTag","执行default");
         hideFragment(fragmentTransaction);
         if(R.id.shou_ye_rb == radioGroup.getCheckedRadioButtonId()){
             shouyeFragment = new ShouyeFragment();
@@ -66,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             else
                 fragmentTransaction.show(shouyeFragment);
         }
+        Bundle bundle = new Bundle();
+        bundle.putInt("ID",USER_ID);
+        shouyeFragment.setArguments(bundle);
         fragmentTransaction.commit();
     }
     private void hideFragment(FragmentTransaction transaction){
@@ -128,11 +134,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     @Override
     public void onBackPressed(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         FragmentManager fragmentManager = getSupportFragmentManager();
+        for(int i = 0;i < fragmentManager.getBackStackEntryCount();i++)
+            fragmentManager.popBackStack();
         if(addFragment != null && addFragment.isVisible()){
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            for(int i = 0;i < fragmentManager.getBackStackEntryCount();i++)
-                fragmentManager.popBackStack();
             switch (radioGroup.getCheckedRadioButtonId()){
                 case R.id.shou_ye_rb:
                     fragmentTransaction.show(shouyeFragment);
