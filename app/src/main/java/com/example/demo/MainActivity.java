@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -35,21 +34,17 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         shou_ye = findViewById(R.id.shou_ye_rb);
         defaultFragment();
         imageButton.setOnClickListener((v)->{
-            FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-            hideFragment(fragmentTransaction1);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            hideFragment(fragmentTransaction);
             if(addFragment == null){
                 addFragment = new AddFragment();
-                fragmentTransaction1.add(R.id.fragment_container_view_tag,addFragment);
+                fragmentTransaction.add(R.id.fragment_container_view_tag,addFragment);
             }
-            fragmentTransaction1.commit();
-            FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-            if(addFragment != null)
-                fragmentTransaction2.show(addFragment);
+            else fragmentTransaction.show(addFragment);
             Bundle bundle = new Bundle();
             bundle.putInt("ID",USER_ID);
             addFragment.setArguments(bundle);
-            fragmentTransaction2.addToBackStack(null);
-            fragmentTransaction2.commit();
+            fragmentTransaction.commit();
         });
         radioGroup.setOnCheckedChangeListener(this);
     }
@@ -134,11 +129,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     @Override
     public void onBackPressed(){
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        for(int i = 0;i < fragmentManager.getBackStackEntryCount();i++)
-            fragmentManager.popBackStack();
         if(addFragment != null && addFragment.isVisible()){
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            hideFragment(fragmentTransaction);
             switch (radioGroup.getCheckedRadioButtonId()){
                 case R.id.shou_ye_rb:
                     fragmentTransaction.show(shouyeFragment);
