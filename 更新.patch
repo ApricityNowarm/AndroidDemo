@@ -1,0 +1,375 @@
+Index: app/src/main/java/com/example/demo/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/demo/MainActivity.java	(revision a18cbb75887055fef5c5815c87f1b283aba48d56)
++++ app/src/main/java/com/example/demo/MainActivity.java	(date 1593944310443)
+@@ -2,15 +2,14 @@
+ 
+ import androidx.appcompat.app.AppCompatActivity;
+ import androidx.fragment.app.FragmentTransaction;
++import androidx.lifecycle.ViewModelProvider;
+ 
+ import android.os.Bundle;
+ import android.widget.ImageButton;
+ import android.widget.RadioButton;
+ import android.widget.RadioGroup;
+-import android.widget.Toast;
+ 
+ public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
+-    private int USER_ID;
+     private RadioGroup radioGroup;
+     private ImageButton imageButton;
+     private ShouyeFragment shouyeFragment;
+@@ -19,12 +18,14 @@
+     private LicaiFragment licaiFragment;
+     private MeFragment meFragment;
+     private RadioButton shou_ye;
++    private MyViewModel myViewModel;
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_main);
++        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
+         if(getIntent() != null)
+-            USER_ID = getIntent().getExtras().getInt("ID");
++            myViewModel.setUSER_ID(getIntent().getExtras().getInt("ID"));
+         init();
+     }
+ 
+@@ -41,9 +42,6 @@
+                 fragmentTransaction.add(R.id.fragment_container_view_tag,addFragment);
+             }
+             else fragmentTransaction.show(addFragment);
+-            Bundle bundle = new Bundle();
+-            bundle.putInt("ID",USER_ID);
+-            addFragment.setArguments(bundle);
+             fragmentTransaction.commit();
+         });
+         radioGroup.setOnCheckedChangeListener(this);
+@@ -64,9 +62,6 @@
+             else
+                 fragmentTransaction.show(shouyeFragment);
+         }
+-        Bundle bundle = new Bundle();
+-        bundle.putInt("ID",USER_ID);
+-        shouyeFragment.setArguments(bundle);
+         fragmentTransaction.commit();
+     }
+     private void hideFragment(FragmentTransaction transaction){
+@@ -95,9 +90,6 @@
+                 }
+                 else
+                     fragmentTransaction.show(shouyeFragment);
+-                Bundle bundle = new Bundle();
+-                bundle.putInt("ID",USER_ID);
+-                shouyeFragment.setArguments(bundle);
+                 break;
+             case R.id.tu_biao_rb:
+                 if(graphFragment == null){
+Index: app/src/main/java/com/example/demo/MyViewModel.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/demo/MyViewModel.java	(revision a18cbb75887055fef5c5815c87f1b283aba48d56)
++++ app/src/main/java/com/example/demo/MyViewModel.java	(date 1593943882818)
+@@ -15,6 +15,15 @@
+ public class MyViewModel extends AndroidViewModel {
+     private MyRepository myRepository;
+     private MutableLiveData<StringBuilder> money = new MutableLiveData<>(new StringBuilder("0.00"));
++    private int USER_ID;
++
++    public int getUSER_ID() {
++        return USER_ID;
++    }
++
++    public void setUSER_ID(int USER_ID) {
++        this.USER_ID = USER_ID;
++    }
+ 
+     public MyViewModel(@NonNull Application application) {
+         super(application);
+Index: app/src/main/java/com/example/demo/AddFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/demo/AddFragment.java	(revision a18cbb75887055fef5c5815c87f1b283aba48d56)
++++ app/src/main/java/com/example/demo/AddFragment.java	(date 1593944310448)
+@@ -23,7 +23,6 @@
+  * create an instance of this fragment.
+  */
+ public class AddFragment extends Fragment implements CompoundButton.OnCheckedChangeListener,View.OnClickListener {
+-    private int USER_ID;
+     private CheckBox[] cb = new CheckBox[18];
+     private Button[] btn = new Button[15];
+     private MyViewModel myViewModel;
+@@ -66,8 +65,7 @@
+             mParam1 = getArguments().getString(ARG_PARAM1);
+             mParam2 = getArguments().getString(ARG_PARAM2);
+         }
+-        USER_ID = getArguments().getInt("ID");
+-        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
++        myViewModel = new ViewModelProvider(Objects.requireNonNull(this.getActivity())).get(MyViewModel.class);
+     }
+ 
+     @Override
+@@ -280,7 +278,7 @@
+                             break;
+                         }
+                     }
+-                    UserData userData = new UserData(USER_ID,sort,
++                    UserData userData = new UserData(myViewModel.getUSER_ID(),sort,
+                             Double.parseDouble(
+                                     myViewModel
+                                             .getMoney()
+Index: app/src/main/res/layout/fragment_me.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_me.xml	(revision a18cbb75887055fef5c5815c87f1b283aba48d56)
++++ app/src/main/res/layout/fragment_me.xml	(date 1593957628529)
+@@ -1,15 +1,176 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".MeFragment">
+-
+-    <!-- TODO: Update blank fragment layout -->
+-    <TextView
++    android:gravity="center"
++    android:orientation="vertical"
++    android:paddingHorizontal="@android:dimen/app_icon_size"
++    android:paddingVertical="@android:dimen/thumbnail_height"
++    tools:context=".MeFragment"
++    android:background="@drawable/overwater">
++
++    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+-        android:text="Me"
+-        android:textSize="50sp"/>
++        android:orientation="vertical">
++        <ImageView
++            android:id="@+id/notebookImgView"
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            android:layout_weight="6"
++            android:contentDescription="@string/todo"
++            app:srcCompat="@drawable/ic_me" />
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            android:layout_weight="2"
++            android:orientation="horizontal">
++            <Switch
++                android:textStyle="italic"
++                android:paddingEnd="20dp"
++                android:text="@string/updateAccount"
++                android:textSize="20sp"
++                android:layout_height="match_parent"
++                android:layout_weight="1"
++                android:layout_width="0dp"
++                tools:ignore="NestedWeights,RtlSymmetry" />
++            <Switch
++                android:textStyle="italic"
++                android:paddingEnd="20dp"
++                android:text="@string/updatePSW"
++                android:textSize="20sp"
++                android:layout_height="match_parent"
++                android:layout_weight="1"
++                android:layout_width="0dp"
++                tools:ignore="RtlSymmetry" />
++
++        </LinearLayout>
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="0dp"
++            android:layout_weight="5"
++            android:orientation="vertical"
++            tools:ignore="UselessParent">
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_marginBottom="1dp"
++                android:layout_weight="2"
++                android:orientation="vertical"
++                tools:ignore="NestedWeights"
++                android:visibility="gone">
++
++                <LinearLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="0dp"
++                    android:layout_weight="99"
++                    android:orientation="horizontal">
++
++                    <ImageView
++                        android:id="@+id/imageViewAc"
++                        android:layout_width="80dp"
++                        android:layout_height="match_parent"
++                        android:contentDescription="@string/todo"
++                        app:srcCompat="@drawable/ic_account" />
++
++                    <EditText
++                        android:id="@+id/account"
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:background="@null"
++                        android:hint="@string/account_hint"
++                        android:importantForAutofill="no"
++                        android:inputType="text"
++                        android:letterSpacing="0.1"
++                        android:singleLine="true" />
++
++                </LinearLayout>
++
++                <View
++                    android:layout_width="match_parent"
++                    android:layout_height="0dp"
++                    android:layout_weight="1"
++                    android:background="#a686ba" />
++            </LinearLayout>
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_weight="2"
++                android:orientation="vertical"
++                android:visibility="gone">
++
++                <LinearLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="0dp"
++                    android:layout_weight="99"
++                    android:orientation="horizontal">
++
++                    <ImageView
++                        android:id="@+id/imagePS1"
++                        android:layout_width="80dp"
++                        android:layout_height="wrap_content"
++                        android:contentDescription="@string/todo"
++                        app:srcCompat="@drawable/ic_password" />
++
++                    <EditText
++                        android:id="@+id/password1"
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:background="@null"
++                        android:hint="@string/password_hint"
++                        android:importantForAutofill="no"
++                        android:inputType="textPassword"
++                        android:letterSpacing="0.1" />
++                </LinearLayout>
++
++                <View
++                    android:layout_width="match_parent"
++                    android:layout_height="0dp"
++                    android:layout_weight="1"
++                    android:background="#a686ba" />
++            </LinearLayout>
++
++
++            <LinearLayout
++                android:layout_width="match_parent"
++                android:layout_height="0dp"
++                android:layout_weight="2"
++                android:orientation="vertical"
++                android:visibility="gone">
++
++                <LinearLayout
++                    android:layout_width="match_parent"
++                    android:layout_height="0dp"
++                    android:layout_weight="99"
++                    android:orientation="horizontal">
++
++                    <ImageView
++                        android:id="@+id/imagePS2"
++                        android:layout_width="80dp"
++                        android:layout_height="wrap_content"
++                        android:contentDescription="@string/todo"
++                        app:srcCompat="@drawable/ic_password" />
+ 
++                    <EditText
++                        android:id="@+id/password2"
++                        android:layout_width="match_parent"
++                        android:layout_height="match_parent"
++                        android:background="@null"
++                        android:hint="@string/password_hint"
++                        android:importantForAutofill="no"
++                        android:inputType="textPassword"
++                        android:letterSpacing="0.1" />
++                </LinearLayout>
++
++                <View
++                    android:layout_width="match_parent"
++                    android:layout_height="0dp"
++                    android:layout_weight="1"
++                    android:background="#a686ba" />
++            </LinearLayout>
++        </LinearLayout>
++    </LinearLayout>
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/demo/ShouyeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/demo/ShouyeFragment.java	(revision a18cbb75887055fef5c5815c87f1b283aba48d56)
++++ app/src/main/java/com/example/demo/ShouyeFragment.java	(date 1593944310453)
+@@ -17,6 +17,7 @@
+ import com.example.demo.databinding.FragmentShouyeBinding;
+ 
+ import java.util.List;
++import java.util.Objects;
+ 
+ /**
+  * A simple {@link Fragment} subclass.
+@@ -33,7 +34,6 @@
+     // TODO: Rename and change types of parameters
+     private String mParam1;
+     private String mParam2;
+-    private int USER_ID;
+     private RecyclerView recyclerView;
+     private MyAdapter myAdapter;
+     private MyViewModel myViewModel;
+@@ -68,8 +68,8 @@
+             mParam1 = getArguments().getString(ARG_PARAM1);
+             mParam2 = getArguments().getString(ARG_PARAM2);
+         }
+-        USER_ID = getArguments().getInt("ID");
+-        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
++        myViewModel = new ViewModelProvider(Objects.requireNonNull(this.getActivity())).get(MyViewModel.class);
++        myViewModel.getUSER_ID();
+     }
+ 
+     @Override
+@@ -91,7 +91,7 @@
+         myAdapter = new MyAdapter();
+         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+         recyclerView.setAdapter(myAdapter);
+-        myViewModel.getAllData(USER_ID).observe(getViewLifecycleOwner(), new Observer<List<UserData>>() {
++        myViewModel.getAllData(myViewModel.getUSER_ID()).observe(getViewLifecycleOwner(), new Observer<List<UserData>>() {
+             @Override
+             public void onChanged(List<UserData> userData) {
+                 myAdapter.setAllData(userData);
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/values/strings.xml	(revision a18cbb75887055fef5c5815c87f1b283aba48d56)
++++ app/src/main/res/values/strings.xml	(date 1593951139498)
+@@ -49,4 +49,6 @@
+     <string name="add">+</string>
+     <string name="certain">确认</string>
+     <string name="_0_00">￥0.00</string>
++    <string name="updateAccount">修改账号</string>
++    <string name="updatePSW">修改密码</string>
+ </resources>

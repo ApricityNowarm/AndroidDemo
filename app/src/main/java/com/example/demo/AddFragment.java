@@ -23,7 +23,6 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class AddFragment extends Fragment implements CompoundButton.OnCheckedChangeListener,View.OnClickListener {
-    private int USER_ID;
     private CheckBox[] cb = new CheckBox[18];
     private Button[] btn = new Button[15];
     private MyViewModel myViewModel;
@@ -66,8 +65,7 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        USER_ID = getArguments().getInt("ID");
-        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
+        myViewModel = new ViewModelProvider(Objects.requireNonNull(this.getActivity())).get(MyViewModel.class);
     }
 
     @Override
@@ -280,7 +278,7 @@ public class AddFragment extends Fragment implements CompoundButton.OnCheckedCha
                             break;
                         }
                     }
-                    UserData userData = new UserData(USER_ID,sort,
+                    UserData userData = new UserData(myViewModel.getUSER_ID(),sort,
                             Double.parseDouble(
                                     myViewModel
                                             .getMoney()

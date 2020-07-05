@@ -15,6 +15,15 @@ import java.util.Objects;
 public class MyViewModel extends AndroidViewModel {
     private MyRepository myRepository;
     private MutableLiveData<StringBuilder> money = new MutableLiveData<>(new StringBuilder("0.00"));
+    private int USER_ID;
+
+    public int getUSER_ID() {
+        return USER_ID;
+    }
+
+    public void setUSER_ID(int USER_ID) {
+        this.USER_ID = USER_ID;
+    }
 
     public MyViewModel(@NonNull Application application) {
         super(application);

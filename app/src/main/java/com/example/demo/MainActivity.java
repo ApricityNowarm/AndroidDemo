@@ -2,15 +2,14 @@ package com.example.demo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
-    private int USER_ID;
     private RadioGroup radioGroup;
     private ImageButton imageButton;
     private ShouyeFragment shouyeFragment;
@@ -19,12 +18,14 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private LicaiFragment licaiFragment;
     private MeFragment meFragment;
     private RadioButton shou_ye;
+    private MyViewModel myViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
         if(getIntent() != null)
-            USER_ID = getIntent().getExtras().getInt("ID");
+            myViewModel.setUSER_ID(getIntent().getExtras().getInt("ID"));
         init();
     }
 
@@ -41,9 +42,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 fragmentTransaction.add(R.id.fragment_container_view_tag,addFragment);
             }
             else fragmentTransaction.show(addFragment);
-            Bundle bundle = new Bundle();
-            bundle.putInt("ID",USER_ID);
-            addFragment.setArguments(bundle);
             fragmentTransaction.commit();
         });
         radioGroup.setOnCheckedChangeListener(this);
@@ -64,9 +62,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             else
                 fragmentTransaction.show(shouyeFragment);
         }
-        Bundle bundle = new Bundle();
-        bundle.putInt("ID",USER_ID);
-        shouyeFragment.setArguments(bundle);
         fragmentTransaction.commit();
     }
     private void hideFragment(FragmentTransaction transaction){
@@ -95,9 +90,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                 }
                 else
                     fragmentTransaction.show(shouyeFragment);
-                Bundle bundle = new Bundle();
-                bundle.putInt("ID",USER_ID);
-                shouyeFragment.setArguments(bundle);
                 break;
             case R.id.tu_biao_rb:
                 if(graphFragment == null){
