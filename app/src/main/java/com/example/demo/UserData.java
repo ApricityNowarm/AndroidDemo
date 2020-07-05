@@ -23,15 +23,26 @@ public class UserData {
 
     private String sort;
 
+    private double data;
+
     private LocalDate date;
     @Ignore
-    public UserData(int u_id, String sort, LocalDate date) {
+    public UserData(int u_id, String sort, double data,LocalDate date) {
         this.u_id = u_id;
         this.sort = sort;
+        this.data = data;
         this.date = date;
     }
 
     public UserData() {
+    }
+
+    public double getData() {
+        return data;
+    }
+
+    public void setData(double data) {
+        this.data = data;
     }
 
     public String getSort() {
