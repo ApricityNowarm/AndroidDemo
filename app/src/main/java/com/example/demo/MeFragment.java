@@ -1,12 +1,16 @@
 package com.example.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,7 +27,10 @@ public class MeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private Button update_ac,update_psw;
+    private UpdateAccountFragment updateAccountFragment;
+    private UpdatePswFragment updatePswFragment;
+    private LinearLayout linearLayout;
     public MeFragment() {
         // Required empty public constructor
     }
@@ -59,6 +66,49 @@ public class MeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_me, container, false);
+        View v = inflater.inflate(R.layout.fragment_me, container, false);
+        init(v);
+        return v;
     }
+    public void hideFragment(FragmentTransaction fragmentTransaction){
+        if (updateAccountFragment != null){
+            fragmentTransaction.hide(updateAccountFragment);
+        }
+        if(updatePswFragment != null){
+            fragmentTransaction.hide(updatePswFragment);
+        }
+    }
+
+    private void init(View v){
+        update_ac = v.findViewById(R.id.to_update_account);
+        update_psw = v.findViewById(R.id.to_update_psw);
+        linearLayout = v.findViewById(R.id.me_view);
+        update_ac.setOnClickListener((View view)->{
+            this.setVis(View.GONE);
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+            hideFragment(fragmentTransaction);
+            if(updateAccountFragment == null){
+                updateAccountFragment = new UpdateAccountFragment();
+                fragmentTransaction.add(R.id.update_view_container, updateAccountFragment);
+            }
+            fragmentTransaction.show(updateAccountFragment);
+            fragmentTransaction.commit();
+        });
+        update_psw.setOnClickListener((View view)->{
+            this.setVis(View.GONE);
+            FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+            hideFragment(fragmentTransaction);
+            if(updatePswFragment == null){
+                updatePswFragment = new UpdatePswFragment();
+                fragmentTransaction.add(R.id.update_view_container, updatePswFragment);
+            }
+            fragmentTransaction.show(updatePswFragment);
+            fragmentTransaction.commit();
+        });
+    }
+
+    public void setVis(int s){
+        linearLayout.setVisibility(s);
+    }
+
 }

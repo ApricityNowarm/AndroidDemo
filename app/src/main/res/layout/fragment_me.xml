@@ -1,176 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/update_view_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:paddingHorizontal="@android:dimen/app_icon_size"
-    android:paddingVertical="@android:dimen/thumbnail_height"
-    tools:context=".MeFragment"
-    android:background="@drawable/overwater">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/me_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@drawable/overwater"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
         <ImageView
             android:id="@+id/notebookImgView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="6"
+            android:layout_width="@android:dimen/thumbnail_width"
+            android:layout_height="@android:dimen/thumbnail_height"
             android:contentDescription="@string/todo"
             app:srcCompat="@drawable/ic_me" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal">
-            <Switch
-                android:textStyle="italic"
-                android:paddingEnd="20dp"
-                android:text="@string/updateAccount"
-                android:textSize="20sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                tools:ignore="NestedWeights,RtlSymmetry" />
-            <Switch
-                android:textStyle="italic"
-                android:paddingEnd="20dp"
-                android:text="@string/updatePSW"
-                android:textSize="20sp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                tools:ignore="RtlSymmetry" />
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@android:dimen/app_icon_size">
 
+            <Button
+                android:id="@+id/to_update_account"
+                android:layout_width="match_parent"
+                android:layout_height="@android:dimen/notification_large_icon_height"
+                android:layout_marginStart="@android:dimen/app_icon_size"
+                android:background="@null"
+                android:text="@string/update_account"
+                android:textSize="25sp" />
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="@android:dimen/app_icon_size"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
-            <LinearLayout
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@android:dimen/app_icon_size">
+
+            <Button
+                android:id="@+id/to_update_psw"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="1dp"
-                android:layout_weight="2"
-                android:orientation="vertical"
-                tools:ignore="NestedWeights"
-                android:visibility="gone">
+                android:layout_height="@android:dimen/notification_large_icon_height"
+                android:layout_marginStart="@android:dimen/app_icon_size"
+                android:background="@null"
+                android:text="@string/update_password"
+                android:textSize="25sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="99"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imageViewAc"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/todo"
-                        app:srcCompat="@drawable/ic_account" />
-
-                    <EditText
-                        android:id="@+id/account"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:hint="@string/account_hint"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:letterSpacing="0.1"
-                        android:singleLine="true" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="#a686ba" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="99"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imagePS1"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/todo"
-                        app:srcCompat="@drawable/ic_password" />
-
-                    <EditText
-                        android:id="@+id/password1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:hint="@string/password_hint"
-                        android:importantForAutofill="no"
-                        android:inputType="textPassword"
-                        android:letterSpacing="0.1" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="#a686ba" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="99"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/imagePS2"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/todo"
-                        app:srcCompat="@drawable/ic_password" />
-
-                    <EditText
-                        android:id="@+id/password2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
-                        android:hint="@string/password_hint"
-                        android:importantForAutofill="no"
-                        android:inputType="textPassword"
-                        android:letterSpacing="0.1" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="#a686ba" />
-            </LinearLayout>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="@android:dimen/app_icon_size"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</FrameLayout>

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -69,7 +70,7 @@ public class ShouyeFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         myViewModel = new ViewModelProvider(Objects.requireNonNull(this.getActivity())).get(MyViewModel.class);
-        myViewModel.getUSER_ID();
+//        myViewModel.getUSER_ID();
     }
 
     @Override
@@ -92,6 +93,7 @@ public class ShouyeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(myAdapter);
         myViewModel.getAllData(myViewModel.getUSER_ID()).observe(getViewLifecycleOwner(), new Observer<List<UserData>>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onChanged(List<UserData> userData) {
                 myAdapter.setAllData(userData);

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UpdatePswFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <EditText
+            android:id="@+id/old_psw"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:autofillHints="@string/old_psw"
+            android:background="@null"
+            android:ellipsize="end"
+            android:hint="@string/old_psw"
+            android:inputType="text"
+            android:lines="1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView8"
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="@android:dimen/notification_large_icon_width"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_password"
+            app:layout_constraintBottom_toTopOf="@+id/imageView9"
+            app:layout_constraintEnd_toStartOf="@+id/old_psw"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#a686ba"
+            app:layout_constraintBottom_toTopOf="@+id/new_psw"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/old_psw" />
+
+        <EditText
+            android:id="@+id/new_psw"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:autofillHints="@string/new_psw_hint"
+            android:background="@null"
+            android:ellipsize="end"
+            android:hint="@string/new_psw_hint"
+            android:inputType="text"
+            android:lines="1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/imageView9"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+        <ImageView
+            android:id="@+id/imageView9"
+            android:layout_width="@android:dimen/notification_large_icon_width"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_password"
+            app:layout_constraintBottom_toTopOf="@+id/imageView10"
+            app:layout_constraintEnd_toStartOf="@+id/new_psw"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#a686ba"
+            app:layout_constraintBottom_toTopOf="@+id/certain_new_psw"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/new_psw" />
+
+        <EditText
+            android:id="@+id/certain_new_psw"
+            android:layout_width="0dp"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:autofillHints="@string/certain_new_psw_hint"
+            android:background="@null"
+            android:ellipsize="end"
+            android:hint="@string/certain_new_psw_hint"
+            android:inputType="text"
+            android:lines="1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageView10"
+            app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+        <ImageView
+            android:id="@+id/imageView10"
+            android:layout_width="@android:dimen/notification_large_icon_width"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/ic_password"
+            app:layout_constraintBottom_toBottomOf="@+id/view4"
+            app:layout_constraintEnd_toStartOf="@+id/certain_new_psw"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#a686ba"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/certain_new_psw" />
+
+        <Button
+            android:id="@+id/update_psw"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_in_button"
+            android:text="@string/certain_up_psw"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            app:layout_constraintVertical_bias="0.765" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

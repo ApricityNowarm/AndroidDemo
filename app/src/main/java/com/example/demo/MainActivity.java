@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -112,8 +114,13 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     meFragment = new MeFragment();
                     fragmentTransaction.add(R.id.fragment_container_view_tag,meFragment);
                 }
-                else
+                else {
+                    FragmentTransaction child_transaction = meFragment.getChildFragmentManager().beginTransaction();
+                    meFragment.hideFragment(child_transaction);
+                    child_transaction.commit();
+                    meFragment.setVis(View.VISIBLE);
                     fragmentTransaction.show(meFragment);
+                }
                 break;
         }
         fragmentTransaction.commit();
@@ -135,6 +142,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     fragmentTransaction.show(licaiFragment);
                     break;
                 case R.id.me_rb:
+                    FragmentTransaction child_transaction = meFragment.getChildFragmentManager().beginTransaction();
+                    meFragment.hideFragment(child_transaction);
+                    child_transaction.commit();
+                    meFragment.setVis(View.VISIBLE);
                     fragmentTransaction.show(meFragment);
                     break;
             }

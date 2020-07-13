@@ -48,7 +48,9 @@
             android:hint="@string/account_hint"
             android:letterSpacing="0.1"
             android:inputType="text"
-            android:importantForAutofill="no" />
+            android:autofillHints="@string/account_hint"
+            android:lines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 
     <LinearLayout
@@ -85,8 +87,10 @@
             android:hint="@string/password_hint"
             android:inputType="text"
             android:letterSpacing="0.1"
-            android:importantForAutofill="no"
-            tools:ignore="TextFields" />
+            tools:ignore="TextFields"
+            android:autofillHints="@string/password_hint"
+            android:lines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 
     <LinearLayout
@@ -123,8 +127,10 @@
             android:hint="@string/certain_password_hint"
             android:inputType="text"
             android:letterSpacing="0.1"
-            android:importantForAutofill="no"
-            tools:ignore="TextFields" />
+            tools:ignore="TextFields"
+            android:autofillHints="@string/certain_password_hint"
+            android:lines="1"
+            android:ellipsize="end"/>
     </LinearLayout>
 
     <LinearLayout
