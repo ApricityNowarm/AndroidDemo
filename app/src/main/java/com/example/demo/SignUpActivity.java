@@ -45,7 +45,9 @@ public class SignUpActivity extends AppCompatActivity {
             }
             else if(password.getText().toString().contains(" "))
                 Toast.makeText(this,"密码不能包含空格",Toast.LENGTH_SHORT).show();
-            else{
+            else if(myViewModel.FindUser(account.getText().toString()) != null){
+                Toast.makeText(this,"账号已存在",Toast.LENGTH_SHORT).show();
+            }else{
                 User user = new User(account.getText().toString(),password.getText().toString());
                 myViewModel.SaveUser(user);
                 Toast.makeText(this,"注册成功",Toast.LENGTH_SHORT).show();

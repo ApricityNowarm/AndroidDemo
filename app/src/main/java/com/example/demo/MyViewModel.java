@@ -58,6 +58,14 @@ public class MyViewModel extends AndroidViewModel {
         return money;
     }
 
+    public User findUserByKey(int search){
+        return myRepository.findUserByKey(search);
+    }
+
+    public void updateAc(User...users){
+        myRepository.updateAccount(users);
+    }
+
     public void appendMoney(String s) {
         this.money.setValue(Objects.requireNonNull(money.getValue()).append(s));
     }

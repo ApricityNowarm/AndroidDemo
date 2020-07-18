@@ -30,6 +30,16 @@ public class MyRepository {
         }
         return null;
     }
+    public User findUserByKey(int search){
+        try {
+            return new FindUserByKeyAsyncTask(userDao).execute(search).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void saveData(UserData... userData) {
         new SaveDataAsyncTask(dataDao).execute(userData);
@@ -44,6 +54,10 @@ public class MyRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void updateAccount(User...users){
+        new UpdateUserAsyncTask(userDao).execute(users);
     }
 
     static class FindUserAsyncTask extends AsyncTask<String, Void, User> {
@@ -97,6 +111,31 @@ public class MyRepository {
         @Override
         protected LiveData<List<UserData>> doInBackground(Integer... integers) {
             return dataDao.getAllDataByU_id(integers[0]);
+        }
+    }
+    static class FindUserByKeyAsyncTask extends AsyncTask<Integer,Void,User>{
+        private UserDao userDao;
+
+        public FindUserByKeyAsyncTask(UserDao userDao){
+            this.userDao = userDao;
+        }
+
+        @Override
+        protected User doInBackground(Integer... integers) {
+            return userDao.findUserByKey(integers[0]);
+        }
+    }
+
+    static class UpdateUserAsyncTask extends AsyncTask<User,Void,Void>{
+        private UserDao userDao;
+
+        public UpdateUserAsyncTask(UserDao userDao){
+            this.userDao = userDao;
+        }
+        @Override
+        protected Void doInBackground(User... users) {
+            userDao.updateUser(users);
+            return null;
         }
     }
 }

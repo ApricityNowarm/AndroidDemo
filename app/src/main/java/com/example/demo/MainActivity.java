@@ -1,6 +1,8 @@
 package com.example.demo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -10,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
     private RadioGroup radioGroup;
@@ -128,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     @Override
     public void onBackPressed(){
+        FragmentTransaction child_transaction = meFragment.getChildFragmentManager().beginTransaction();
         if(addFragment != null && addFragment.isVisible()){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             hideFragment(fragmentTransaction);
@@ -142,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     fragmentTransaction.show(licaiFragment);
                     break;
                 case R.id.me_rb:
-                    FragmentTransaction child_transaction = meFragment.getChildFragmentManager().beginTransaction();
                     meFragment.hideFragment(child_transaction);
                     child_transaction.commit();
                     meFragment.setVis(View.VISIBLE);
@@ -150,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
                     break;
             }
             fragmentTransaction.commit();
+        }else if(meFragment.isVisible() && meFragment.getVis() == View.GONE){
+            meFragment.hideFragment(child_transaction);
+            meFragment.setVis(View.VISIBLE);
+            child_transaction.commit();
         }else
             super.onBackPressed();
     }

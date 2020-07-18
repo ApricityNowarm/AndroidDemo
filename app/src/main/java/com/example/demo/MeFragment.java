@@ -110,5 +110,8 @@ public class MeFragment extends Fragment {
     public void setVis(int s){
         linearLayout.setVisibility(s);
     }
+    public int getVis(){
+        return linearLayout.getVisibility();
+    }
 
 }

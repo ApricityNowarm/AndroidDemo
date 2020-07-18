@@ -17,4 +17,6 @@ public interface UserDao {
     public abstract void deleteUser(User ...user);
     @Query("SELECT * FROM user WHERE userId = :search")
     public abstract User findUserById(String search);
+    @Query("SELECT * FROM user WHERE id = :search")
+    public abstract User findUserByKey(int search);
 }
