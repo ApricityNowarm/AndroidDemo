@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:stateListAnimator="@anim/fragment_open_enter"
-    tools:context=".MainActivity">
+    android:stateListAnimator="@animator/fragment_open_enter"
+    tools:context=".MainActivity"
+    tools:ignore="PrivateResource">
 
     <FrameLayout
         android:id="@+id/fragment_container_view_tag"
